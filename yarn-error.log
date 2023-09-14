@@ -1,0 +1,27 @@
+Arguments: 
+  /usr/local/bin/node /Users/ernestkristianto/.yarn/bin/yarn.js add @vercel/postgres
+
+PATH: 
+  /Users/ernestkristianto/.yarn/bin:/Users/ernestkristianto/.config/yarn/global/node_modules/.bin:/Users/ernestkristianto/.gem/bin:/Users/ernestkristianto/Documents/flutter/bin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Apple/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:/Users/ernestkristianto/.pub-cache/bin
+
+Yarn version: 
+  1.22.19
+
+Node version: 
+  20.6.1
+
+Platform: 
+  darwin arm64
+
+Trace: 
+  Error: getaddrinfo ENOTFOUND registry.yarnpkg.com
+      at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:118:26)
+
+npm manifest: 
+  No manifest
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
