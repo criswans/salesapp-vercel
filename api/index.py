@@ -49,11 +49,15 @@ app = FastAPI()
 
 @app.get("/")
 def read_root():
-    cur.execute("INSERT INTO pets(Name, Owner) VALUES('hehe','Izzy Weber')")
+    return {"message": "Server is up and running!"}
+
+@app.get("/insert")
+def read_root():
+    cur.execute("INSERT INTO pets (Name, Owner) VALUES('hehe','Izzy Weber')")
     conn.commit()
     cur.close()
     conn.close()
-    return {"message": "Server is up and running!"}
+    return {"added : data"}
 
 # @app.get("/task/{id}", response_model = task_schema, status_code=200)
 # async def get_task(Name:str,db: Session = Depends(get_database_session)):
