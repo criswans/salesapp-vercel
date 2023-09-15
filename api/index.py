@@ -44,7 +44,7 @@ app = FastAPI()
 def read_root():
     return {"message": "Server is up and running!"}
 
-@app.get("/task/{id}", response_model = task_schema, status_code=200)
-async def get_task(Name:str,db: Session = Depends(get_database_session)):
-   task = db.query(Task).get(Name)
-   return task
+# @app.get("/task/{id}", response_model = task_schema, status_code=200)
+# async def get_task(Name:str,db: Session = Depends(get_database_session)):
+#    task = db.query(Task).get(Name)
+#    return task
