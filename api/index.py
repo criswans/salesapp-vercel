@@ -1,9 +1,17 @@
 from fastapi import FastAPI, Depends, HTTPException
 from sqlalchemy.orm import Session
 from typing import List
-from model import Task
+# from model import Task
 from schema import task_schema
 from session import get_database_session
+from sqlalchemy.schema import Column
+from sqlalchemy.types import String, Integer, Text
+from database import Base
+
+class Task(Base):
+    tablename = "pets"	
+    Name = Column(String(20))		
+    Owner = Column(Text())
 app = FastAPI()
 
 @app.get("/")
