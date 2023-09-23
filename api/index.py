@@ -38,12 +38,12 @@ from fastapi import FastAPI, Depends, HTTPException
 #     tablename = "pets"	
 #     Name = Column(String(20))		
 #     Owner = Column(Text())
-conn = psycopg2.connect(database = "verceldb", 
-                        user = "default", 
-                        host= 'ep-red-grass-55948427-pooler.ap-southeast-1.postgres.vercel-storage.com',
-                        password = "io6VkLhbY3pZ",
-                        port = 5432)
-cur = conn.cursor()
+# conn = psycopg2.connect(database = "verceldb", 
+#                         user = "default", 
+#                         host= 'ep-red-grass-55948427-pooler.ap-southeast-1.postgres.vercel-storage.com',
+#                         password = "io6VkLhbY3pZ",
+#                         port = 5432)
+# cur = conn.cursor()
 
 
 
