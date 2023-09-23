@@ -1,4 +1,5 @@
 from fastapi import FastAPI, Depends, HTTPException
+import psycopg2
 # from sqlalchemy.orm import Session
 # from typing import List
 # # from model import Task
@@ -38,12 +39,12 @@ from fastapi import FastAPI, Depends, HTTPException
 #     tablename = "pets"	
 #     Name = Column(String(20))		
 #     Owner = Column(Text())
-# conn = psycopg2.connect(database = "verceldb", 
-#                         user = "default", 
-#                         host= 'ep-red-grass-55948427-pooler.ap-southeast-1.postgres.vercel-storage.com',
-#                         password = "io6VkLhbY3pZ",
-#                         port = 5432)
-# cur = conn.cursor()
+conn = psycopg2.connect(database = "verceldb", 
+                        user = "default", 
+                        host= 'ep-red-grass-55948427-pooler.ap-southeast-1.postgres.vercel-storage.com',
+                        password = "io6VkLhbY3pZ",
+                        port = 5432)
+cur = conn.cursor()
 
 
 
@@ -53,13 +54,13 @@ app = FastAPI()
 def read_root():
     return {"message": "Server is up and running!"}
 
-# @app.get("/insert")
-# def read_root():
-#     cur.execute("INSERT INTO pets (Name, Owner) VALUES('hehe','Izzy Weber')")
-#     conn.commit()
-#     cur.close()
-#     conn.close()
-#     return {"added : data"}
+@app.get("/insert")
+def read_root():
+    cur.execute("INSERT INTO pets (Name, Owner) VALUES('hehe','Izzy Weber')")
+    conn.commit()
+    cur.close()
+    conn.close()
+    return {"added : data"}
 
 # @app.get("/task/{id}", response_model = task_schema, status_code=200)
 # async def get_task(Name:str,db: Session = Depends(get_database_session)):
