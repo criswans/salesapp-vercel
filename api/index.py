@@ -1,50 +1,39 @@
 from fastapi import FastAPI, Depends, HTTPException
+from flask import Flask, jsonify, request, make_response
 import psycopg2
-# from sqlalchemy.orm import Session
-# from typing import List
-# # from model import Task
-# # from schema import task_schema
-# # from session import get_database_session
-# from sqlalchemy.schema import Column
-# from sqlalchemy.types import String, Integer, Text
-# # from database import Base
-
-# from pydantic import BaseModel
-# from typing import Optional
-# from sqlalchemy import create_engine
-# from sqlalchemy.ext.declarative import declarative_base
-# from sqlalchemy.orm import sessionmaker
-
-
-# model.Base.metadata.create_all(bind=engine)
-# def create_get_session():
-#    try:
-#        db = SessionLocal()
-#        yield db
-#    finally:
-#        db.close()
-# SQLALCHEMY_DATABASE_URL = "postgres://default:io6VkLhbY3pZ@ep-red-grass-55948427.ap-southeast-1.postgres.vercel-storage.com:5432/verceldb"
-# engine = create_engine(SQLALCHEMY_DATABASE_URL)
-# SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
-# Base = declarative_base()
-
-# class task_schema(BaseModel):
-#    Name :str
-#    Owner :str
-
-#    class Config:
-#        orm_mode = True
-
-# class Task(Base):
-#     tablename = "pets"	
-#     Name = Column(String(20))		
-#     Owner = Column(Text())
 conn = psycopg2.connect(database = "verceldb", 
                         user = "default", 
                         host= 'ep-red-grass-55948427-pooler.ap-southeast-1.postgres.vercel-storage.com',
                         password = "io6VkLhbY3pZ",
                         port = 5432)
+def select(query, values, conn):
+    myCursor = conn.cursor()
+    myCursor.execute(query, values)
+    row_headers = [x[0] for x in myCursor.description]
+    myResult = myCursor.fetchall()
+    json_data = []
+
+    for result in myResult:
+        json_data.append(dict(zip(row_headers, result)))
+    return json_data
+
+
+def insert(query, val, conn):
+    myCursor = conn.cursor()
+    myCursor.execute(query, val)
+    conn.commit()
+    
 cur = conn.cursor()
+
+class Data:
+    def __init__(self):
+        self.mydb = conn()
+
+    def get_data (self, query, values):
+        return select(query, values, self.mydb)
+    
+    def insert_data (self, query, val):
+        return insert(query, val, self.mydb)
 
 
 
@@ -62,7 +51,30 @@ def read_root():
     conn.close()
     return {"added : data"}
 
-# @app.get("/task/{id}", response_model = task_schema, status_code=200)
-# async def get_task(Name:str,db: Session = Depends(get_database_session)):
-#    task = db.query(Task).get(Name)
-#    return task
+@app.route('/get_company', methods=['GET'])
+def get_company():
+    
+    company_id =  request.args.get("company_id")
+    
+    try:
+        dt = Data()
+        values = ()
+        if request.method == "GET":
+            if company_id:
+                query = "SELECT * FROM company where company_id = %s"
+                values = (company_id,)
+            else:
+                query =  "SELECT * FROM company"
+
+        data = dt.get_data(query, values)
+             
+
+    except Exception as e:
+        return make_response(jsonify({
+            "status" : "FAILED",
+            "error" : str(e)}), 400)
+    
+    return make_response(jsonify({
+        "status" : "SUCCESS",
+        "data" : str(data)}), 200)
+
