@@ -39,10 +39,11 @@ def read_root():
 
 @app.get('/get_company/{company_id}')
 def read_root(company_id: str, request: Request):
-    company_id =  request.client.host
+    client_host =  request.client.host
     return {
         "status" : "SUCCESS",
-        "data" : str(company_id)}
+        "client_host" : client_host, 
+        "company_id" : company_id}
     
 
     # try:
