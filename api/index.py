@@ -23,7 +23,7 @@ def read_root():
 
 @app.get("/insert")
 def read_root():
-    cur.execute("INSERT INTO pets (Name, Owner) VALUES('hehe','Izzy Weber')")
+    cur.execute("INSERT INTO company (name) VALUES('hehe')")
     conn.commit()
     cur.close()
     conn.close()
