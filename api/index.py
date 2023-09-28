@@ -39,7 +39,7 @@ def read_root():
 
 @app.get('/get_company')
 def read_root():
-    company_id =  request("company_id")
+    company_id =  request.args.get("company_id")
     return make_response(jsonify({
         "status" : "SUCCESS",
         "data" : str(company_id)}))
