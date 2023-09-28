@@ -37,34 +37,31 @@ def read_root():
    
 
 
-@app.get('/get_company/')
-def read_root(company_id: str, name : str):
-    # client_host =  request.client.host
-    return {
-        "status" : "SUCCESS",
-        "name" : name, 
-        "company_id" : company_id}
+@app.get('/get_company')
+def read_root(company_id: str):
     
+    try:
+        # Lakukan operasi untuk mendapatkan data perusahaan berdasarkan ID
+        query = "SELECT * FROM company WHERE company_id = %s"
+        cur.execute(query, (company_id,))
+        company_data = cur.fetchone()
 
-    # try:
-    #     dt = Data()
-    #     values = ()
-    #     if request.method == "GET":
-    #         if company_id:
-    #             query = "SELECT * FROM company where company_id = %s"
-    #             values = (company_id,)
-    #         else:
-    #             query =  "SELECT * FROM company"
+        if company_data:
+            # Jika data perusahaan ditemukan, kirimkan sebagai respons
+            return {
+                "status": "SUCCESS",
+                "data": company_data
+            }
+        else:
+            return {
+                "status": "FAILED",
+                "error": "Company not found"
+            }
+    except Exception as e:
+        return {
+            "status": "FAILED",
+            "error": str(e)
+        }
 
-    #     data = dt.get_data(query, values)
-             
 
-    # except Exception as e:
-    #     return make_response(jsonify({
-    #         "status" : "FAILED",
-    #         "error" : str(e)}), 400)
     
-    # return make_response(jsonify({
-    #     "status" : "SUCCESS",
-    #     "data" : str(data)}), 200)
-
