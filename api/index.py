@@ -41,8 +41,11 @@ def read_root():
 def read_root(company_id: str):
     
     try:
-        # Lakukan operasi untuk mendapatkan data perusahaan berdasarkan ID
-        query = "SELECT * FROM company WHERE company_id = %s"
+        if company_id:
+            query = "SELECT * FROM company WHERE company_id = %s"
+        else:
+            query = "SELECT * FROM company"
+        
         cur.execute(query, (company_id,))
         company_data = cur.fetchone()
 
