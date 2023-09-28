@@ -43,6 +43,7 @@ app = FastAPI()
 def read_root():
     return {"message": "Server is up and running!"}
 
+
 @app.get("/insert")
 def read_root():
     cur.execute("INSERT INTO pets (Name, Owner) VALUES('hehe','Izzy Weber')")
@@ -51,30 +52,32 @@ def read_root():
     conn.close()
     return {"added : data"}
 
+
 @app.route('/get_company', methods=['GET'])
 def get_company():
     
     company_id =  request.args.get("company_id")
+    return company_id
     
-    try:
-        dt = Data()
-        values = ()
-        if request.method == "GET":
-            if company_id:
-                query = "SELECT * FROM company where company_id = %s"
-                values = (company_id,)
-            else:
-                query =  "SELECT * FROM company"
+    # try:
+    #     dt = Data()
+    #     values = ()
+    #     if request.method == "GET":
+    #         if company_id:
+    #             query = "SELECT * FROM company where company_id = %s"
+    #             values = (company_id,)
+    #         else:
+    #             query =  "SELECT * FROM company"
 
-        data = dt.get_data(query, values)
+    #     data = dt.get_data(query, values)
              
 
-    except Exception as e:
-        return make_response(jsonify({
-            "status" : "FAILED",
-            "error" : str(e)}), 400)
+    # except Exception as e:
+    #     return make_response(jsonify({
+    #         "status" : "FAILED",
+    #         "error" : str(e)}), 400)
     
-    return make_response(jsonify({
-        "status" : "SUCCESS",
-        "data" : str(data)}), 200)
+    # return make_response(jsonify({
+    #     "status" : "SUCCESS",
+    #     "data" : str(data)}), 200)
 
