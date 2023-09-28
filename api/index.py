@@ -21,7 +21,7 @@ def read_root():
     return {"message": "Server is up and running!"}
 
 
-@app.get("/insert", methods=['GET'])
+@app.get("/insert")
 def read_root():
     cur.execute("INSERT INTO company (name) VALUES('hehe')")
     conn.commit()
@@ -30,12 +30,12 @@ def read_root():
     return {"added : data"}
 
 
-@app.route('/get_company')
-def get_company():
-    
+@app.get('/get_company')
+def read_root():    
     company_id =  request.args.get("company_id")
     return company_id
     
+
     # try:
     #     dt = Data()
     #     values = ()
