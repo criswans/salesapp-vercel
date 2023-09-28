@@ -21,7 +21,7 @@ def read_root():
     return {"message": "Server is up and running!"}
 
 
-@app.get("/insert")
+@app.post("/insert")
 def read_root():
     cur.execute("INSERT INTO company (name) VALUES('hehe')")
     conn.commit()
