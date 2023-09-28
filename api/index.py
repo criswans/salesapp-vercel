@@ -30,7 +30,7 @@ def read_root():
     return {"added : data"}
 
 
-@app.route('/get_company', methods=['GET'])
+@app.route('/get_company')
 def get_company():
     
     company_id =  request.args.get("company_id")
