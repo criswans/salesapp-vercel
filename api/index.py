@@ -1,5 +1,5 @@
-from fastapi import FastAPI, Depends, HTTPException
-from flask import Flask, jsonify, request, make_response
+from fastapi import FastAPI,Request, Depends, HTTPException
+# from flask import Flask, jsonify, request, make_response
 import psycopg2
 conn = psycopg2.connect(database = "verceldb", 
                         user = "default", 
@@ -37,12 +37,12 @@ def read_root():
    
 
 
-@app.get('/get_company')
-def read_root():
-    company_id =  request.args.get("company_id")
-    return make_response(jsonify({
+@app.get('/get_company/{company_id}')
+def read_root(company_id: str, request: Request):
+    company_id =  request.client.host
+    return {
         "status" : "SUCCESS",
-        "data" : str(company_id)}))
+        "data" : str(company_id)}
     
 
     # try:
