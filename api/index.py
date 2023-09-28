@@ -23,11 +23,18 @@ def read_root():
 
 @app.post("/insert")
 def read_root():
-    cur.execute("INSERT INTO company (name) VALUES('hehe')")
-    conn.commit()
-    cur.close()
-    conn.close()
-    return {"added : data"}
+    
+    try:
+        cur.execute("INSERT INTO company (name) VALUES('hehe')")
+        conn.commit()
+        cur.close()
+        conn.close()
+        return {"added : data"}
+        
+    except Exception as e:
+        
+        return e
+   
 
 
 @app.get('/get_company')
