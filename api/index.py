@@ -37,8 +37,8 @@ def read_root():
    
 
 
-@app.get('/get_company/{company_id}')
-def read_root(company_id: str, request: Request):
+@app.get('/get_company/')
+def read_root(company_id: str):
     # client_host =  request.client.host
     return {
         "status" : "SUCCESS",
