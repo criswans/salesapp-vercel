@@ -42,7 +42,7 @@ def read_root(company_id: str, name : str):
     # client_host =  request.client.host
     return {
         "status" : "SUCCESS",
-        # "client_host" : client_host, 
+        "name" : name, 
         "company_id" : company_id}
     
 
