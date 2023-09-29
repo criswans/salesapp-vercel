@@ -57,7 +57,7 @@ def read_root(company_id: str):
             }
             return {
                 "status": "SUCCESS",
-                "data": company_data
+                "data": company_json
             }
         else:
             return {
