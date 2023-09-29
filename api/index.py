@@ -37,11 +37,13 @@ def read_root():
 def read_root(company_id: str):
     
     try:
+        if company_id:
+            query = "SELECT * FROM company WHERE company_id = %s"
+            value = (company_id,)
+        else:
+            query = "SELECT * FROM company"
         
-        query = "SELECT * FROM company"
-        
-        
-        cur.execute(query, (company_id,))
+        cur.execute(query, value)
         company_data = cur.fetchone()
 
         if company_data:
@@ -93,7 +95,7 @@ def read_root(user_id: str):
         else:
             return {
                 "status": "FAILED",
-                "error": "User not found"
+                "error": "user not found"
             }
     except Exception as e:
         return {
