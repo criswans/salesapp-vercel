@@ -50,7 +50,11 @@ def read_root(company_id: str):
         company_data = cur.fetchone()
 
         if company_data:
-            # Jika data perusahaan ditemukan, kirimkan sebagai respons
+            company_json = {
+                "company_id": company_data[0],
+                "name": company_data[1],
+                "pic_url" : company_data[2]
+            }
             return {
                 "status": "SUCCESS",
                 "data": company_data
