@@ -38,7 +38,7 @@ def read_root(company_id: str):
     
     try:
         
-        query = "SELECT * FROM company WHERE company_id = %s"
+        query = "SELECT * FROM company"
         
         
         cur.execute(query, (company_id,))
