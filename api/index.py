@@ -27,17 +27,18 @@ def read_root(company_data: CompanyCreate):
     try:
         # Query SQL untuk menyisipkan data perusahaan baru
         query = "INSERT INTO company (name, pic_url) VALUES (%s, %s)"
-        cur.execute(query, (company_data.name, company_data.pic_url))
-        company_id = cur.fetchone()[0]
-        conn.commit()
+        # cur.execute(query, (company_data.name, company_data.pic_url))
+        # company_id = cur.fetchone()[0]
+        # conn.commit()
 
         return {
             "status": "SUCCESS",
-            "data": {
-                "company_id": company_id,
-                "name": company_data.name,
-                "pic_url": company_data.pic_url
-            }
+            "data":company_data
+            # "data": {
+            #     "company_id": company_id,
+            #     "name": company_data.name,
+            #     "pic_url": company_data.pic_url
+            # }
         }
     except Exception as e:
         return {
