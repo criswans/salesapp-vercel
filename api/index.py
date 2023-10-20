@@ -39,43 +39,45 @@ def read_root(company_id: str):
     try:
         if company_id:
             query = "SELECT * FROM company WHERE company_id = %s"
-            value = (company_id,)
-            cur.execute(query, value)
+            cur.execute(query, (company_id,))
             company_data = cur.fetchone()
-        else:
-            query = "SELECT * FROM company"
-            cur.execute(query)
-            company_data = cur.fetchall()
-        
-        # cur.execute(query, value)
-        # company_data = cur.fetchone()
 
-        if company_data:
-            length = len(company_data)
-            
-            if length > 1:
-                for row in company_data:
-                    company_json = {
-                    "company_id": company_data[0],
-                    "name": company_data[1],
-                    "pic_url" : company_data[2]
-                    }
-                
-            else:
+            if company_data:
                 company_json = {
                     "company_id": company_data[0],
                     "name": company_data[1],
-                    "pic_url" : company_data[2]
+                    "location": company_data[2],
+                    # Tambahkan kolom lainnya sesuai dengan struktur tabel
                 }
-            return {
+
+                return {
                     "status": "SUCCESS",
                     "data": company_json
                 }
-                
+            else:
+                return {
+                    "status": "FAILED",
+                    "error": "Company not found"
+                }
         else:
+            # Jika company_id tidak disertakan, ambil semua data perusahaan
+            query = "SELECT * FROM company"
+            cur.execute(query)
+            company_data = cur.fetchall()
+
+            company_list = []
+            for row in company_data:
+                company_json = {
+                    "company_id": row[0],
+                    "name": row[1],
+                    "location": row[2],
+                    # Tambahkan kolom lainnya sesuai dengan struktur tabel
+                }
+                company_list.append(company_json)
+
             return {
-                "status": "FAILED",
-                "error": "Company not found"
+                "status": "SUCCESS",
+                "data": company_list
             }
     except Exception as e:
         return {
