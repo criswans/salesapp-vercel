@@ -56,7 +56,7 @@ class UserCreate(BaseModel):
 def read_root(user_data: UserCreate):
         
     try:
-        if user_data.company_id:     
+        if user_data.company_id is None:     
             query = "INSERT INTO users (email, name, role, pic_url, company_id) VALUES (%s, %s, %s,%s, %s) RETURNING user_id"
             cur.execute(query, (user_data.email, user_data.name, user_data.role, user_data.pic_url, user_data.company_id))
             user_id = cur.fetchone()[0]
