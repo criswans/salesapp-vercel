@@ -66,7 +66,7 @@ def read_root(user_data: UserCreate):
             cur.execute(query1, ("company name", ""))
             company_id = cur.fetchone()[0]
             query = "INSERT INTO users (email, name, role, pic_url, company_id) VALUES (%s, %s, %s,%s, %s) RETURNING user_id"
-            cur.execute(query, (user_data.email, user_data.name, user_data.role, user_data.pic_url, user_data.company_id))
+            cur.execute(query, (user_data.email, user_data.name, user_data.role, user_data.pic_url, company_id))
             user_id = cur.fetchone()[0]
             conn.commit()
                       
