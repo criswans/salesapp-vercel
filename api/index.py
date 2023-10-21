@@ -79,7 +79,7 @@ def read_root(user_data: UserCreate):
                 "name": user_data.name,
                 "role": user_data.role,
                 "pic_url": user_data.pic_url,
-                "company_id" : user_data.company_id
+                "company_id" : company_id
             }
         }   
         
