@@ -23,7 +23,7 @@ class CompanyCreate(BaseModel):
 
 @app.post("/add_company")
 def read_root(company_data: CompanyCreate):
-    
+        
     try:
         query = "INSERT INTO company (name, pic_url) VALUES (%s, %s) RETURNING company_id"
         cur.execute(query, (company_data.name, company_data.pic_url))
@@ -39,6 +39,39 @@ def read_root(company_data: CompanyCreate):
                 "pic_url": company_data.pic_url
             }
         }
+    except Exception as e:
+        return {
+            "status": "FAILED",
+            "error": str(e)
+        }
+        
+class UserCreate(BaseModel):
+    email: str
+    name: str
+    role: str
+    pic_url: str
+    company_id: int
+        
+@app.post("/add_user")
+def read_root(user_data: UserCreate):
+        
+    try:      
+        query = "INSERT INTO users (email, name, role, pic_url, company_id) VALUES (%s, %s, %s,%s, %s) RETURNING user_id"
+        cur.execute(query, (user_data.email, user_data.name, user_data.role, user_data.pic_url, user_data.company_id))
+        user_id = cur.fetchone()[0]
+        conn.commit()                         
+        return {
+            "status": "SUCCESS",
+            "data": {
+                "user_id": user_id,
+                "email" : user_data.email,
+                "name": user_data.name,
+                "role": user_data.role,
+                "pic_url": user_data.pic_url,
+                "company_id" : user_data.company_id
+            }
+        }   
+        
     except Exception as e:
         return {
             "status": "FAILED",
