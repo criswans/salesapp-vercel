@@ -54,53 +54,30 @@ class UserCreate(BaseModel):
         
 @app.post("/add_user")
 def read_root(user_data: UserCreate):
-        
-    try:
-        
-        query2 = "SELECT * FROM users WHERE email = %s RETURNING user_id" 
-        cur.execute(query2, (user_data.email))
-        user = cur.fetchone()[0]
-        
-        if user:
-            return{
-                "status" : "FAILED"
+
+    try:      
+        query = "INSERT INTO users (email, name, role, pic_url, company_id) VALUES (%s, %s, %s,%s, %s) RETURNING user_id"
+        cur.execute(query, (user_data.email, user_data.name, user_data.role, user_data.pic_url, user_data.company_id))
+        user_id = cur.fetchone()[0]
+        conn.commit()                         
+        return {
+            "status": "SUCCESS",
+            "data": {
+                "user_id": user_id,
+                "email" : user_data.email,
+                "name": user_data.name,
+                "role": user_data.role,
+                "pic_url": user_data.pic_url,
+                "company_id" : user_data.company_id
             }
-        else:
-        
-        
-            if user_data.company_id != 0:     
-                query = "INSERT INTO users (email, name, role, pic_url, company_id) VALUES (%s, %s, %s,%s, %s) RETURNING user_id"
-                cur.execute(query, (user_data.email, user_data.name, user_data.role, user_data.pic_url, user_data.company_id))
-                company_id = user_data.company_id
-                user_id = cur.fetchone()[0]
-                conn.commit()
-            else:
-                query1 = "INSERT INTO company (name, pic_url) VALUES (%s, %s) RETURNING company_id"
-                cur.execute(query1, ("company name", ""))
-                company_id = cur.fetchone()[0]
-                query = "INSERT INTO users (email, name, role, pic_url, company_id) VALUES (%s, %s, %s,%s, %s) RETURNING user_id"
-                cur.execute(query, (user_data.email, user_data.name, user_data.role, user_data.pic_url, company_id))
-                user_id = cur.fetchone()[0]
-                conn.commit()
-                
-                        
-            return {
-                "status": "SUCCESS",
-                "data": {
-                    "user_id": user_id,
-                    "email" : user_data.email,
-                    "name": user_data.name,
-                    "role": user_data.role,
-                    "pic_url": user_data.pic_url,
-                    "company_id" : company_id
-                }
-            }   
-        
+        }   
+
     except Exception as e:
         return {
             "status": "FAILED",
             "error": str(e)
         }
+
    
 
 
